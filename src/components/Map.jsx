@@ -9,15 +9,36 @@ const Map = () => {
 
   if (loadError) return <div>Error loading map</div>;
   if (!isLoaded) return <div>Loading...</div>;
+
+  const mapOptions = {
+    styles: [
+      {
+        featureType: "poi",
+        elementType: "labels",
+        stylers: [{ visibility: "off" }],
+      },
+      {
+        featureType: "transit.station.bus",
+        elementType: "labels",
+        stylers: [{ visibility: "off" }],
+      },
+    ],
+    streetViewControl: false, // deshabilita Street View
+    mapTypeControl: false, // deshabilita la opción de cambiar a vista satelital
+    fullscreenControl: false, // deshabilita la opción de pantalla completa
+    zoomControlOptions: {
+      position: google.maps.ControlPosition.RIGHT_TOP, // Mueve los controles de zoom a la esquina superior derecha
+    },
+  };
+
   return (
     <div className="w-full bg-red-50 h-full flex-1">
       <GoogleMap
         center={coordinates}
-        mapContainerClassName="w-100 h-[100svh]"
+        mapContainerClassName="w-100 h-full"
         zoom={17}
-      >
-        <Marker position={coordinates} />
-      </GoogleMap>
+        options={mapOptions}
+      ></GoogleMap>
     </div>
   );
 };
