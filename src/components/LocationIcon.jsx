@@ -2,7 +2,7 @@ import React from "react";
 import { FaLocationPin, FaLocationDot } from "react-icons/fa6";
 import { FaBed } from "react-icons/fa";
 
-const LocationIcon = ({ category, active = true }) => {
+const LocationIcon = ({ category, isActive = false }) => {
   let icon;
   switch (category) {
     case "hotel":
@@ -18,7 +18,7 @@ const LocationIcon = ({ category, active = true }) => {
   }
   return (
     <div>
-      {active ? (
+      {isActive ? (
         <div className="relative w-fit">
           <FaLocationPin className="w-12 h-12 text-primary" />
           {icon}
