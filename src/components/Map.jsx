@@ -1,14 +1,38 @@
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
+import { response } from "../constants/data";
+import { useEffect, useState } from "react";
 
-const Map = ({className}) => {
+const Map = ({ className }) => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      const newData = response.data.filter(
+        ((seen) => (place) => {
+          if (seen.has(place.location_id)) {
+            return false;
+          } else {
+            seen.add(place.location_id);
+            return true;
+          }
+        })(new Set())
+      );
+      setData(newData);
+    }, 500); //Simulate API call
+  }, []);
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
-  const coordinates = { lat: -34.90309469570489, lng: -56.15626041660778 };
+  const coordinates = { lat: 12.28163, lng: 108.92137 };
 
-  if (loadError) return <div className="grid place-items-center flex-1">Error loading map</div>;
-  if (!isLoaded) return <div className="grid place-items-center flex-1">Loading...</div>;
+  if (loadError)
+    return (
+      <div className="grid place-items-center flex-1">Error loading map</div>
+    );
+  if (!isLoaded)
+    return <div className="grid place-items-center flex-1">Loading...</div>;
 
   const mapOptions = {
     styles: [
@@ -35,10 +59,20 @@ const Map = ({className}) => {
     <div className={className}>
       <GoogleMap
         center={coordinates}
-        mapContainerClassName="w-100 h-full"
+        mapContainerClassName="w-full h-full"
         zoom={15}
         options={mapOptions}
-      ></GoogleMap>
+      >
+        {data.map((place) => (
+          <Marker
+            key={place.location_id}
+            position={{
+              lat: parseFloat(place.latitude),
+              lng: parseFloat(place.longitude),
+            }}
+          />
+        ))}
+      </GoogleMap>
     </div>
   );
 };

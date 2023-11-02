@@ -3,6 +3,7 @@ import MainPage from "./pages/MainPage";
 import DetailPage from "./pages/DetailPage";
 import ErrorPage from "./pages/ErrorPage";
 
+
 function App() {
   return (
     <>
