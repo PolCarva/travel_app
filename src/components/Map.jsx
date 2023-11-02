@@ -1,14 +1,14 @@
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 
-const Map = () => {
+const Map = ({className}) => {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
   const coordinates = { lat: -34.90309469570489, lng: -56.15626041660778 };
 
-  if (loadError) return <div>Error loading map</div>;
-  if (!isLoaded) return <div>Loading...</div>;
+  if (loadError) return <div className="grid place-items-center flex-1">Error loading map</div>;
+  if (!isLoaded) return <div className="grid place-items-center flex-1">Loading...</div>;
 
   const mapOptions = {
     styles: [
@@ -32,11 +32,11 @@ const Map = () => {
   };
 
   return (
-    <div className="w-full bg-red-50 h-full flex-1">
+    <div className={className}>
       <GoogleMap
         center={coordinates}
         mapContainerClassName="w-100 h-full"
-        zoom={17}
+        zoom={15}
         options={mapOptions}
       ></GoogleMap>
     </div>

@@ -1,22 +1,21 @@
 import React, { useState } from "react";
 import TabButton from "./TabButton";
 
-const Footer = () => {
-  const [activeTab, setActiveTab] = useState("list");
+const Footer = ({ setTab, tab }) => {
   return (
-    <footer className="h-24">
+    <footer className="h-24 md:hidden">
       <div className="flex p-5 justify-center items-center h-full w-full gap-5">
         <TabButton
-          toggleActive={() => setActiveTab("list")}
+          toggleActive={() => setTab("list")}
           type={"list"}
           text="View Places"
-          isActive={activeTab === "list"}
+          isActive={tab === "list"}
         />
         <TabButton
-          toggleActive={() => setActiveTab("map")}
+          toggleActive={() => setTab("map")}
           type={"map"}
           text="View Map"
-          isActive={activeTab === "map"}
+          isActive={tab === "map"}
         />
       </div>
     </footer>

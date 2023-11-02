@@ -1,15 +1,18 @@
-import Map from "./components/Map";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import MainPage from "./pages/MainPage";
+import DetailPage from "./pages/DetailPage";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   return (
     <>
-      <div className="w-full h-[100svh] flex flex-col">
-        <Header />
-        <Map />
-        <Footer />
-      </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/detail/:id" element={<DetailPage />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </Router>
     </>
   );
 }
