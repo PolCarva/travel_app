@@ -1,9 +1,13 @@
-import React from 'react'
+import ListCard from "./ListCard";
 
-const List = () => {
+const List = ({ data, className }) => {
   return (
-    <div>List</div>
-  )
-}
+    <div className={`${className}`}>
+      {data.map((item, index) => (
+        <ListCard key={index} data={item} />
+      ))}
+    </div>
+  );
+};
 
-export default List
+export default List;

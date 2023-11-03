@@ -1,31 +1,22 @@
-import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
-import { response } from "../constants/data";
-import { useEffect, useState } from "react";
+import {
+  GoogleMap,
+  useLoadScript,
+  Marker,
+  MarkerF,
+} from "@react-google-maps/api";
+
+import { useState } from "react";
+import useLocationStore from "../store/locationStore";
 
 const Map = ({ className }) => {
   const [data, setData] = useState([]);
-
-  useEffect(() => {
-    setTimeout(() => {
-      const newData = response.data.filter(
-        ((seen) => (place) => {
-          if (seen.has(place.location_id)) {
-            return false;
-          } else {
-            seen.add(place.location_id);
-            return true;
-          }
-        })(new Set())
-      );
-      setData(newData);
-    }, 500); //Simulate API call
-  }, []);
+  const { latitude, longitude } = useLocationStore((state) => state);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
-  const coordinates = { lat: 12.28163, lng: 108.92137 };
+  const coordinates = { lat: latitude, lng: longitude };
 
   if (loadError)
     return (
@@ -63,6 +54,13 @@ const Map = ({ className }) => {
         zoom={15}
         options={mapOptions}
       >
+        <MarkerF
+          position={coordinates}
+          icon={{
+            url: "/img/user-location.png",
+            scaledSize: { width: 60, height: 60 },
+          }}
+        />
         {data.map((place) => (
           <Marker
             key={place.location_id}
