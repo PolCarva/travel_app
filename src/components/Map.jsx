@@ -1,22 +1,22 @@
 import {
   GoogleMap,
   useLoadScript,
-  Marker,
   MarkerF,
 } from "@react-google-maps/api";
 
-import { useState } from "react";
 import useLocationStore from "../store/locationStore";
+import { useState } from "react";
 
-const Map = ({ className }) => {
-  const [data, setData] = useState([]);
+const Map = ({ className, places }) => {
+  const [selectedPlace, setSelectedPlace] = useState(null);
+
   const { latitude, longitude } = useLocationStore((state) => state);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
-  const coordinates = { lat: latitude, lng: longitude };
+  const userCoordinates = { lat: latitude, lng: longitude };
 
   if (loadError)
     return (
@@ -49,27 +49,36 @@ const Map = ({ className }) => {
   return (
     <div className={className}>
       <GoogleMap
-        center={coordinates}
+        center={userCoordinates}
         mapContainerClassName="w-full h-full"
         zoom={15}
         options={mapOptions}
       >
         <MarkerF
-          position={coordinates}
+          animation={google.maps.Animation.DROP}
+          position={userCoordinates}
           icon={{
             url: "/img/user-location.png",
             scaledSize: { width: 60, height: 60 },
           }}
         />
-        {data.map((place) => (
-          <Marker
-            key={place.location_id}
+        {places.map((place) => (
+          <MarkerF
+            animation={google.maps.Animation.DROP}
+            key={place.id}
             position={{
-              lat: parseFloat(place.latitude),
-              lng: parseFloat(place.longitude),
+              lat: place.location.latitude,
+              lng: place.location.longitude,
+            }}
+            onClick={() => {
+              setSelectedPlace(place);
             }}
           />
         ))}
+
+        {selectedPlace && (
+          <div><h1>Selected place: {selectedPlace.displayName}</h1></div>
+        )}
       </GoogleMap>
     </div>
   );

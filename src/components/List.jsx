@@ -1,10 +1,10 @@
 import ListCard from "./ListCard";
 
-const List = ({ data, className }) => {
+const List = ({ places, className }) => {
   return (
     <div className={`${className}`}>
-      {data.map((item, index) => (
-        <ListCard key={index} data={item} />
+      {places.map((place) => (
+        <ListCard key={place.id} place={place} />
       ))}
     </div>
   );
