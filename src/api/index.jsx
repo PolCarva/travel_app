@@ -1,12 +1,12 @@
 import axios from "axios";
 import { BASE_PLACES_URL } from "../constants/config";
 
-import {data} from "../constants/data";
+import { data } from "../constants/data";
 
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export const getPlacesData = async ({ lat, lng, radius, type }) => {
-  return data.places; //Remove line on production
+  return data; //Remove line on production
   try {
     let category = [];
 
@@ -59,7 +59,7 @@ export const getPlacesData = async ({ lat, lng, radius, type }) => {
       "Content-Type": "application/json",
       "X-Goog-Api-Key": apiKey,
       "X-Goog-FieldMask":
-        "places.displayName,places.location,places.accessibilityOptions,places.rating,places.photos,places.primaryTypeDisplayName.text,places.userRatingCount,places.id", // ajusta los campos según tus necesidades
+        "places.displayName,places.location,places.accessibilityOptions,places.rating,places.photos,places.primaryTypeDisplayName,places.userRatingCount,places.id,places.formattedAddress,places.addressComponents", // ajusta los campos según tus necesidades
     };
 
     const response = await axios.post(

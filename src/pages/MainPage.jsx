@@ -23,7 +23,6 @@ const MainPage = () => {
     };
     (latitude || longitude) && //Espera a que los valores de latitud y longitud estén disponibles
       getPlacesData(params).then((response) => {
-        console.log(response);
         setData(response);
       });
   }, [latitude, longitude]);

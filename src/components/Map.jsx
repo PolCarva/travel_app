@@ -1,29 +1,60 @@
-import {
-  GoogleMap,
-  useLoadScript,
-  MarkerF,
-} from "@react-google-maps/api";
+import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 
 import useLocationStore from "../store/locationStore";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import SelectedPlace from "./SelectedPlace";
 
 const Map = ({ className, places }) => {
-  const [selectedPlace, setSelectedPlace] = useState(null);
-
   const { latitude, longitude } = useLocationStore((state) => state);
+  const userCoordinates = { lat: latitude, lng: longitude };
+  const mapRef = useRef(null);
+  const [selectedPlace, setSelectedPlace] = useState(null);
+  const [mapCenter, setMapCenter] = useState(userCoordinates);
+
+  useEffect(() => {
+    setMapCenter({ lat: latitude, lng: longitude});
+  }, [latitude, longitude]);
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
-  const userCoordinates = { lat: latitude, lng: longitude };
+  const handleMarkerClick = (place) => {
+    setSelectedPlace(place);
+    const newCenter = {
+      lat: place.location.latitude,
+      lng: place.location.longitude,
+    };
+    if (mapRef.current) {
+      mapRef.current.panTo(newCenter);
+      if (mapRef.current.getZoom() !== 17) {
+        mapRef.current.setZoom(17);
+      }
+      setTimeout(() => {
+        mapRef.current.setZoom(18);
+      }, 200);
+    }
+  };
 
-  if (loadError)
+  if (loadError) {
     return (
       <div className="grid place-items-center flex-1">Error loading map</div>
     );
-  if (!isLoaded)
+  }
+
+  if (!isLoaded) {
     return <div className="grid place-items-center flex-1">Loading...</div>;
+  }
+
+  if (loadError) {
+    return (
+      <div className="grid place-items-center flex-1">Error loading map</div>
+    );
+  }
+
+  if (!isLoaded) {
+    return <div className="grid place-items-center flex-1">Loading...</div>;
+  }
 
   const mapOptions = {
     styles: [
@@ -49,10 +80,11 @@ const Map = ({ className, places }) => {
   return (
     <div className={className}>
       <GoogleMap
-        center={userCoordinates}
+        center={mapCenter}
         mapContainerClassName="w-full h-full"
         zoom={15}
         options={mapOptions}
+        onLoad={(mapInstance) => (mapRef.current = mapInstance)}
       >
         <MarkerF
           animation={google.maps.Animation.DROP}
@@ -70,15 +102,10 @@ const Map = ({ className, places }) => {
               lat: place.location.latitude,
               lng: place.location.longitude,
             }}
-            onClick={() => {
-              setSelectedPlace(place);
-            }}
+            onClick={() => handleMarkerClick(place)}
           />
         ))}
-
-        {selectedPlace && (
-          <div><h1>Selected place: {selectedPlace.displayName}</h1></div>
-        )}
+        {selectedPlace && <SelectedPlace place={selectedPlace} />}
       </GoogleMap>
     </div>
   );
