@@ -4,7 +4,7 @@ import useLocationStore from "../store/locationStore";
 import { useEffect, useRef, useState } from "react";
 import SelectedPlace from "./SelectedPlace";
 
-const Map = ({ className, places }) => {
+const Map = ({ className, places, category = "restaurants" }) => {
   const { latitude, longitude } = useLocationStore((state) => state);
   const userCoordinates = { lat: latitude, lng: longitude };
   const mapRef = useRef(null);
@@ -12,7 +12,7 @@ const Map = ({ className, places }) => {
   const [mapCenter, setMapCenter] = useState(userCoordinates);
 
   useEffect(() => {
-    setMapCenter({ lat: latitude, lng: longitude});
+    setMapCenter({ lat: latitude, lng: longitude });
   }, [latitude, longitude]);
 
   const { isLoaded, loadError } = useLoadScript({
@@ -96,6 +96,10 @@ const Map = ({ className, places }) => {
         />
         {places.map((place) => (
           <MarkerF
+            icon={{
+              url: `/img/${category}-location.png`,
+              scaledSize: { width: 60, height: 60 },
+            }}
             animation={google.maps.Animation.DROP}
             key={place.id}
             position={{

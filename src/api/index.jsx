@@ -11,7 +11,7 @@ export const getPlacesData = async ({ lat, lng, radius, type }) => {
     let category = [];
 
     switch (type) {
-      case "restaurant":
+      case "restaurants":
         category = [
           "restaurant",
           "cafe",
@@ -21,10 +21,10 @@ export const getPlacesData = async ({ lat, lng, radius, type }) => {
           "bakery",
         ];
         break;
-      case "hotel":
+      case "hotels":
         category = ["lodging"];
         break;
-      case "attraction":
+      case "attractions":
         category = [
           "amusement_park",
           "aquarium",
