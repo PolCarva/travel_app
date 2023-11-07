@@ -82,7 +82,7 @@ const SelectedPlace = ({ place }) => {
           e.target.src = "https://via.placeholder.com/150";
         }}
         alt={place.displayName || "Place"}
-        className="w-1/4 object-cover aspect-square rounded-lg"
+        className="h-full object-cover aspect-square rounded-lg"
       />
     </div>
   );

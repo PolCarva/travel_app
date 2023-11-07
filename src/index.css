@@ -1,3 +1,43 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/* MAP CONTROLLERS STYLES */
+.gm-control-active {
+    background: #345afa !important;
+    border-radius: 100%;
+}
+
+
+div[draggable="false"] {
+    background-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* + and - images */
+button[draggable="false"] img {
+    filter: brightness(0) invert(1);
+}
+
+button[title="Ampliar"] {
+    display: block !important;
+    margin-bottom: 0.5rem !important;
+    transition: all 0.2s ease-in-out !important;
+}
+
+button[title="Reducir"] {
+    display: block !important;
+    border: 0 !important;
+    transition: all 0.2s ease-in-out !important;
+
+}
+
+/* Random line on Map controls */
+.gmnoprint>div>div>div {
+    display: none !important;
+}
+
+button[title="Ampliar"]:hover, button[title="Reducir"]:hover {
+    background-color: #1335be !important;
+}

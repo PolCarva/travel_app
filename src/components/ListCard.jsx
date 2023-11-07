@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { FaStar, FaWheelchair } from "react-icons/fa";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
+import useLikedStore from "../store/likedStore";
+
 const ListCard = ({ place }) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const { addLiked, removeLiked, liked } = useLikedStore((state) => state);
+  const [isLiked, setIsLiked] = useState(liked.some((p) => p.id === place.id));
 
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -47,8 +50,14 @@ const ListCard = ({ place }) => {
     return formattedAddress.trim(); // trim para asegurar que no haya espacios extra si falta el número de la calle
   }
 
-  const handleLike = (id) => {
+  const handleLike = (place) => {
     setIsLiked(!isLiked);
+    if (isLiked) {
+      removeLiked(place);
+    } else {
+      addLiked(place);
+    }
+
   };
 
   return (
@@ -66,7 +75,7 @@ const ListCard = ({ place }) => {
         <div className="absolute top-2 right-2">
           <div
             className="bg-white shadow-custom rounded-full p-2"
-            onClick={() => handleLike(place.id)}
+            onClick={() => handleLike(place)}
           >
             {isLiked ? (
               <AiFillHeart className="text-secondary w-6 h-6" />

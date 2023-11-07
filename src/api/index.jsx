@@ -6,8 +6,8 @@ import { data } from "../constants/data";
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export const getPlacesData = async ({ lat, lng, radius, type }) => {
-/*   return data; //Remove line on production
- */  try {
+  return data; //Remove line on production
+  try {
     let category = [];
 
     switch (type) {
