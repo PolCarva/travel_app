@@ -2,7 +2,7 @@ import React from "react";
 import { FaHeart } from "react-icons/fa6";
 import SearchInput from "./SearchInput";
 
-const Header = ({ toggleLikedList, showLikeList }) => {
+const Header = ({ toggleLikedList, showLikeList, handleSearch }) => {
   const handleFilterClick = () => {};
 
   return (
@@ -14,7 +14,7 @@ const Header = ({ toggleLikedList, showLikeList }) => {
         >
           <FaHeart className={`h-6 w-6 ${showLikeList ? "text-secondary" : "text-black"}`} />
         </div>
-        <SearchInput onFilterClick={handleFilterClick} />
+        <SearchInput onFilterClick={handleFilterClick} handleSearch={handleSearch} />
       </div>
     </header>
   );

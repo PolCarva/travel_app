@@ -11,8 +11,6 @@ import Footer from "../components/Footer";
 import List from "../components/List";
 
 const MainPage = () => {
-
-
   const [tab, setTab] = useState("map");
   const [data, setData] = useState([]);
   const [listedPlaces, setListedPlaces] = useState([]);
@@ -34,18 +32,28 @@ const MainPage = () => {
       });
   }, [latitude, longitude]);
 
-
   useEffect(() => {
-    if(showLikeList){
-      setListedPlaces(liked)
+    if (showLikeList) {
+      setListedPlaces(liked);
     } else {
-      setListedPlaces(data)
+      setListedPlaces(data);
     }
-  },[showLikeList, liked]) //Agregar liked si quiero eliminar de la lista al deslikear
+  }, [showLikeList, liked]); //Agregar liked si quiero eliminar de la lista al deslikear
+
+  /* Search places by name */
+  const handleSearch = (e) => {
+    const showingList = showLikeList ? liked : data;
+    const value = e.target.value.toLowerCase();
+    const filteredPlaces = showingList.filter((place) =>
+      place.displayName?.text?.toLowerCase().includes(value)
+    );
+    setListedPlaces(filteredPlaces);
+  };
 
   return (
     <div className="w-full h-[100svh] flex flex-col">
       <Header
+        handleSearch={handleSearch}
         showLikeList={showLikeList}
         toggleLikedList={() => {
           setTab("list");

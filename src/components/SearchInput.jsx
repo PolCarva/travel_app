@@ -1,12 +1,13 @@
 import { FiSearch } from "react-icons/fi";
 import { PiSlidersHorizontalBold } from "react-icons/pi";
 
-const SearchInput = ({ onFilterClick, enableFilter = true }) => {
+const SearchInput = ({ onFilterClick, enableFilter = true, handleSearch }) => {
   return (
     <div className="flex items-center px-4 py-2 rounded-full bg-white shadow-custom">
       <FiSearch className="text-gray-100 h-6 w-6 mr-4" />
 
       <input
+        onChange={(e) => handleSearch(e)}
         type="text"
         className="flex-1 py-2 bg-white outline-none"
         placeholder="Search Places"
