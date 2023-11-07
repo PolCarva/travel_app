@@ -59,13 +59,15 @@ const SelectedPlace = ({ place }) => {
             <div className="flex">{renderStars(place.rating)}</div>
           </div>
           <div className="flex gap-1 items-center">
-            {place.accessibilityOptions?.wheelchairAccessible || (
+            {place.accessibilityOptions?.wheelchairAccessibleEntrance ? (
+              <span className="text-sm">Accessible</span>
+            ) : (
               <span className="text-sm">Not accessible</span>
             )}
 
             <FaWheelchair
               className={`${
-                place.accessibilityOptions?.wheelchairAccessible
+                place.accessibilityOptions?.wheelchairAccessibleEntrance
                   ? "text-green-500"
                   : "text-red-500"
               }`}
