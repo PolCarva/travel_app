@@ -3,8 +3,13 @@ import { FaHeart } from "react-icons/fa6";
 import SearchInput from "./SearchInput";
 import SearchCityInput from "./SearchCityInput";
 
-const Header = ({ toggleLikedList, showLikeList, handleSearch, toggleFilter }) => {
-
+const Header = ({
+  toggleLikedList,
+  showLikeList,
+  handleSearch,
+  toggleFilter,
+  onPlaceSelected,
+}) => {
   return (
     <header className="h-[20vh] flex justify-between">
       <div className="flex justify-between gap-5 items-center h-full w-full lg:w-1/3 px-5 lg:px-10">
@@ -35,6 +40,7 @@ const Header = ({ toggleLikedList, showLikeList, handleSearch, toggleFilter }) =
       </div>
       <div className="hidden lg:flex justify-end gap-5 items-center h-full lg:w-1/3 px-10">
         <SearchCityInput
+          onPlaceSelected={onPlaceSelected}
           enableFilter={false}
           placeholder={"Search City"}
         />

@@ -23,10 +23,10 @@ const SearchInput = ({
 
       {enableFilter && (
         <div
-          className="h-8 w-8 aspect-square grid place-items-center rounded-full absolute right-3 border border-gray-100"
+          className="h-8 w-8 aspect-square grid place-items-center rounded-full cursor-pointer absolute right-3 border border-gray-100 hover:bg-gray-10 transition-colors duration-300 ease-in-out"
           onClick={onFilterClick}
         >
-          <PiSlidersHorizontalBold className="text-gray-100 h-4 w-4  cursor-pointer" />
+          <PiSlidersHorizontalBold className="text-gray-100 h-4 w-4" />
         </div>
       )}
     </div>
