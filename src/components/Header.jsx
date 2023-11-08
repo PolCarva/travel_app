@@ -1,9 +1,9 @@
 import React from "react";
 import { FaHeart } from "react-icons/fa6";
 import SearchInput from "./SearchInput";
+import SearchCityInput from "./SearchCityInput";
 
-const Header = ({ toggleLikedList, showLikeList, handleSearch }) => {
-  const handleFilterClick = () => {};
+const Header = ({ toggleLikedList, showLikeList, handleSearch, toggleFilter }) => {
 
   return (
     <header className="h-[20vh] flex justify-between">
@@ -21,16 +21,23 @@ const Header = ({ toggleLikedList, showLikeList, handleSearch }) => {
         <div></div>
         <SearchInput
           placeholder={"Search Places"}
-          onFilterClick={handleFilterClick}
+          onFilterClick={toggleFilter}
           handleSearch={handleSearch}
         />
       </div>
       <div className="hidden lg:flex gap-5 justify-center items-center h-full lg:w-1/3">
-        <img src="/img/logo.svg" alt="Hotel & Travel" className="h-12 aspect-square" />
+        <img
+          src="/img/logo.svg"
+          alt="Hotel & Travel"
+          className="h-12 aspect-square"
+        />
         <span className="font-bold text-2xl">Hotel & Travel</span>
       </div>
       <div className="hidden lg:flex justify-end gap-5 items-center h-full lg:w-1/3 px-10">
-        <SearchInput enableFilter={false} placeholder={"Search City"} />
+        <SearchCityInput
+          enableFilter={false}
+          placeholder={"Search City"}
+        />
       </div>
     </header>
   );

@@ -9,12 +9,14 @@ import Header from "../components/Header";
 import Map from "../components/Map";
 import Footer from "../components/Footer";
 import List from "../components/List";
+import FilterContainer from "../components/FilterContainer";
 
 const MainPage = () => {
   const [tab, setTab] = useState("map");
   const [data, setData] = useState([]);
   const [listedPlaces, setListedPlaces] = useState([]);
   const [showLikeList, setShowLikeList] = useState(false);
+  const [filterOpen, setFilterOpen] = useState(false);
   const { latitude, longitude } = useLocationStore((state) => state);
   const { liked } = useLikedStore((state) => state);
 
@@ -30,6 +32,11 @@ const MainPage = () => {
         setData(response);
         setListedPlaces(response);
       });
+
+    return () => {
+      setData([]);
+      setListedPlaces([]);
+    };
   }, [latitude, longitude]);
 
   useEffect(() => {
@@ -38,7 +45,7 @@ const MainPage = () => {
     } else {
       setListedPlaces(data);
     }
-  }, [showLikeList, liked]); //Agregar liked si quiero eliminar de la lista al deslikear
+  }, [showLikeList, liked, data]); //Agregar liked si quiero eliminar de la lista al deslikear
 
   /* Filter places by name */
   const handleSearch = (e) => {
@@ -53,6 +60,7 @@ const MainPage = () => {
   return (
     <div className="w-full h-[100svh] flex flex-col">
       <Header
+        toggleFilter={() => setFilterOpen(!filterOpen)}
         handleSearch={handleSearch}
         showLikeList={showLikeList}
         toggleLikedList={() => {
@@ -60,7 +68,7 @@ const MainPage = () => {
           setShowLikeList(!showLikeList);
         }}
       />
-      <div className="h-[70vh] flex">
+      <div className="h-[70vh] md:h-[80vh] flex relative overflow-hidden">
         <List
           places={listedPlaces}
           className={`${
@@ -68,12 +76,13 @@ const MainPage = () => {
           } lg:w-1/3 lg:px-10 h-full !overflow-y-scroll flex flex-col gap-2 items-center transition-all duration-300 ease-in-out`}
         />
         <Map
-          places={listedPlaces}
+          places={data}
           category="restaurants"
           className={`${
             tab === "map" ? "w-full" : "w-0"
           } lg:w-2/3 h-full transition-all duration-300 ease-in-out`}
         />
+        <FilterContainer isOpen={filterOpen} />
       </div>
       <Footer tab={tab} setTab={setTab} setShowLikeList={setShowLikeList} />
     </div>

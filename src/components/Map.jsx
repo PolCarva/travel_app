@@ -4,6 +4,8 @@ import useLocationStore from "../store/locationStore";
 import { useEffect, useRef, useState } from "react";
 import SelectedPlace from "./SelectedPlace";
 
+const libraries = ["places"];
+
 const Map = ({ className, places, category = "restaurants" }) => {
   const { latitude, longitude } = useLocationStore((state) => state);
   const userCoordinates = { lat: latitude, lng: longitude };
@@ -17,6 +19,7 @@ const Map = ({ className, places, category = "restaurants" }) => {
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+    libraries: libraries,
   });
 
   const handleMarkerClick = (place) => {
@@ -35,16 +38,6 @@ const Map = ({ className, places, category = "restaurants" }) => {
       }, 200);
     }
   };
-
-  if (loadError) {
-    return (
-      <div className="grid place-items-center flex-1">Error loading map</div>
-    );
-  }
-
-  if (!isLoaded) {
-    return <div className="grid place-items-center flex-1">Loading...</div>;
-  }
 
   if (loadError) {
     return (
