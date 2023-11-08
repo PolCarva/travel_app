@@ -61,7 +61,7 @@ const ListCard = ({ place }) => {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4 w-full">
+    <div className="bg-white rounded-lg shadow-lg p-4 w-full lg:hover:scale-105 transition-transform ease-in-out cursor-pointer duration-300">
       <div className="relative">
         <img
           src={url}

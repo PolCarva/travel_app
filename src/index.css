@@ -7,6 +7,7 @@
 .gm-control-active {
     background: #345afa !important;
     border-radius: 100%;
+    box-shadow: 6px 10px 24px rgba(0, 0, 0, 0.2);
 }
 
 

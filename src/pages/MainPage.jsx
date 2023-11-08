@@ -40,7 +40,7 @@ const MainPage = () => {
     }
   }, [showLikeList, liked]); //Agregar liked si quiero eliminar de la lista al deslikear
 
-  /* Search places by name */
+  /* Filter places by name */
   const handleSearch = (e) => {
     const showingList = showLikeList ? liked : data;
     const value = e.target.value.toLowerCase();
@@ -64,15 +64,15 @@ const MainPage = () => {
         <List
           places={listedPlaces}
           className={`${
-            tab === "list" ? "w-full p-5" : "w-0 p-0 overflow-hidden"
-          } md:w-1/3 h-full !overflow-y-scroll flex flex-col gap-2 items-center transition-all duration-300 ease-in-out`}
+            tab === "list" ? "w-full p-10" : "w-0 p-0 overflow-hidden"
+          } lg:w-1/3 lg:px-10 h-full !overflow-y-scroll flex flex-col gap-2 items-center transition-all duration-300 ease-in-out`}
         />
         <Map
           places={listedPlaces}
           category="restaurants"
           className={`${
             tab === "map" ? "w-full" : "w-0"
-          } md:w-2/3 h-full transition-all duration-300 ease-in-out`}
+          } lg:w-2/3 h-full transition-all duration-300 ease-in-out`}
         />
       </div>
       <Footer tab={tab} setTab={setTab} setShowLikeList={setShowLikeList} />
