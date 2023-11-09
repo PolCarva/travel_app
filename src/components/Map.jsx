@@ -6,15 +6,14 @@ import SelectedPlace from "./SelectedPlace";
 
 const libraries = ["places"];
 
-const Map = ({ className, places, category = "restaurants" }) => {
+const Map = ({ className, places, category = "restaurants", setCenter, center }) => {
   const { latitude, longitude } = useLocationStore((state) => state);
   const userCoordinates = { lat: latitude, lng: longitude };
   const mapRef = useRef(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
-  const [mapCenter, setMapCenter] = useState(userCoordinates);
 
   useEffect(() => {
-    setMapCenter({ lat: latitude, lng: longitude });
+    setCenter({ lat: latitude, lng: longitude });
   }, [latitude, longitude]);
 
   const { isLoaded, loadError } = useLoadScript({
@@ -73,7 +72,7 @@ const Map = ({ className, places, category = "restaurants" }) => {
   return (
     <div className={className}>
       <GoogleMap
-        center={mapCenter}
+        center={center}
         mapContainerClassName="w-full h-full"
         zoom={15}
         options={mapOptions}
@@ -81,7 +80,7 @@ const Map = ({ className, places, category = "restaurants" }) => {
       >
         <MarkerF
           animation={google.maps.Animation.DROP}
-          position={userCoordinates}
+          position={center}
           icon={{
             url: "/img/user-location.png",
             scaledSize: { width: 60, height: 60 },

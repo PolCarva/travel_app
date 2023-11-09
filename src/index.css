@@ -42,3 +42,13 @@ button[title="Reducir"] {
 button[title="Ampliar"]:hover, button[title="Reducir"]:hover {
     background-color: #1335be !important;
 }
+
+.MuiSlider-rail {
+    background: #1335be !important;
+}
+.css-1gv0vcd-MuiSlider-track {
+    background: #1335be !important;
+}
+.MuiSlider-thumb::before {
+    background: #1335be !important;
+}

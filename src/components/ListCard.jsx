@@ -29,27 +29,6 @@ const ListCard = ({ place }) => {
     return [...fullStars, ...emptyStars];
   }
 
-  function getFormattedAddress(addressComponents) {
-    let streetName = "";
-    let streetNumber = "";
-
-    // Encontrar el nombre de la calle y el número de la calle
-    for (let i = 0; i < addressComponents.length; i++) {
-      const component = addressComponents[i];
-      if (component.types.includes("route")) {
-        streetName = component.longText;
-      }
-      if (component.types.includes("street_number")) {
-        streetNumber = component.longText;
-      }
-    }
-
-    // Formatear la dirección
-    const formattedAddress = `${streetName} ${streetNumber}`;
-
-    return formattedAddress.trim(); // trim para asegurar que no haya espacios extra si falta el número de la calle
-  }
-
   const handleLike = (place) => {
     setIsLiked(!isLiked);
     if (isLiked) {
@@ -98,11 +77,11 @@ const ListCard = ({ place }) => {
         </h2>
         <div className="flex gap-2 justify-between items-center">
           <span className="text-sm line-clamp-1 text-gray-50">
-            {getFormattedAddress(place.addressComponents)}
+            {place.formattedAddress}
           </span>
           <div className="flex gap-1 items-center">
-            <span className="text-gray-50">{place.rating}</span>
-            <div className="flex">{renderStars(place.rating)}</div>
+            <span className="text-gray-50">{place.rating || 0}</span>
+            <div className="flex">{renderStars(place.rating || 0)}</div>
           </div>
         </div>
       </div>

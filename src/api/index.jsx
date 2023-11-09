@@ -77,3 +77,7 @@ export const getPlacesData = async ({ lat, lng, radius, type }) => {
     throw error;
   }
 };
+
+export const getAutocompleteData = async (input) => {
+
+}

@@ -7,7 +7,7 @@ const SelectedPlace = ({ place }) => {
   //const url = `https://places.googleapis.com/v1/${photoName}/media?key=${apiKey}&maxWidthPx=400` || "https://via.placeholder.com/150";
   const url = "https://via.placeholder.com/150";
 
-  function renderStars(rating) {
+  function renderStars(rating = 0) {
     const fullStars = Array(Math.floor(rating))
       .fill()
       .map((_, index) => (
@@ -21,36 +21,15 @@ const SelectedPlace = ({ place }) => {
     return [...fullStars, ...emptyStars];
   }
 
-  function getFormattedAddress(addressComponents) {
-    let streetName = "";
-    let streetNumber = "";
-
-    // Encontrar el nombre de la calle y el número de la calle
-    for (let i = 0; i < addressComponents.length; i++) {
-      const component = addressComponents[i];
-      if (component.types.includes("route")) {
-        streetName = component.longText;
-      }
-      if (component.types.includes("street_number")) {
-        streetNumber = component.longText;
-      }
-    }
-
-    // Formatear la dirección
-    const formattedAddress = `${streetName} ${streetNumber}`;
-
-    return formattedAddress.trim(); // trim para asegurar que no haya espacios extra si falta el número de la calle
-  }
-
   return (
-    <div className="absolute flex gap-4 bottom-5 right-1/2 translate-x-[50%] bg-white w-11/12 h-1/5 rounded-lg py-2 px-3">
+    <div className="absolute flex gap-4 bottom-5 right-1/2 translate-x-[50%] bg-white w-11/12 md:w-3/5 lg:w-1/2 h-1/5 rounded-lg py-2 px-3">
       <div className="flex-1 flex flex-col justify-around">
         <div className="flex flex-col gap-0.5">
           <h2 className="font-bold text-black text-lg leading-5 line-clamp-2">
             {place.displayName.text}
           </h2>
           <span className="text-sm line-clamp-1 text-gray-50">
-            {getFormattedAddress(place.addressComponents)}
+            {place.formattedAddress}
           </span>
         </div>
         <div className="w-full flex justify-between items-center">

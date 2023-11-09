@@ -19,6 +19,7 @@ const MainPage = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const { latitude, longitude } = useLocationStore((state) => state);
   const { liked } = useLikedStore((state) => state);
+  const [center, setCenter] = useState({ latitude, longitude });
 
   useEffect(() => {
     const params = {
@@ -57,10 +58,31 @@ const MainPage = () => {
     setListedPlaces(filteredPlaces);
   };
 
+  const onPlaceSelected = (place) => {
+    const { geometry } = place;
+    const lat = geometry.location.lat();
+    const lng = geometry.location.lng();
+
+    setCenter({ lat, lng });
+
+    const params = {
+      lat: lat,
+      lng: lng,
+      radius: 1000,
+      type: "restaurants",
+    };
+
+    getPlacesData(params).then((response) => {
+      setData(response);
+      setListedPlaces(response);
+    });
+  };
+
   return (
-    <div className="w-full h-[100svh] flex flex-col">
+    <div className="w-full h-[100svh] flex flex-col relative overflow-hidden">
       <Header
         toggleFilter={() => setFilterOpen(!filterOpen)}
+        onPlaceSelected={onPlaceSelected}
         handleSearch={handleSearch}
         showLikeList={showLikeList}
         toggleLikedList={() => {
@@ -76,14 +98,16 @@ const MainPage = () => {
           } lg:w-1/3 lg:px-10 h-full !overflow-y-scroll flex flex-col gap-2 items-center transition-all duration-300 ease-in-out`}
         />
         <Map
+          center={center}
+          setCenter={setCenter}
           places={data}
           category="restaurants"
           className={`${
             tab === "map" ? "w-full" : "w-0"
           } lg:w-2/3 h-full transition-all duration-300 ease-in-out`}
         />
-        <FilterContainer isOpen={filterOpen} />
       </div>
+        <FilterContainer isOpen={filterOpen}  closeFilter={() => setFilterOpen(!filterOpen)}/>
       <Footer tab={tab} setTab={setTab} setShowLikeList={setShowLikeList} />
     </div>
   );

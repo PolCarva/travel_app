@@ -14,11 +14,11 @@ const Header = ({
     <header className="h-[20vh] flex justify-between">
       <div className="flex justify-between gap-5 items-center h-full w-full lg:w-1/3 px-5 lg:px-10">
         <div
-          className="p-3 shadow-custom rounded-full"
+          className="p-3 shadow-custom rounded-full cursor-pointer hover:scale-110 transition-transform ease-in-out duration-300 group"
           onClick={toggleLikedList}
         >
           <FaHeart
-            className={`h-6 w-6 ${
+            className={`h-6 w-6 group-hover:text-secondary-hover transition-colors ease-in-out ${
               showLikeList ? "text-secondary" : "text-black"
             }`}
           />
@@ -34,9 +34,9 @@ const Header = ({
         <img
           src="/img/logo.svg"
           alt="Hotel & Travel"
-          className="h-12 aspect-square"
+          className="h-12 aspect-square select-none"
         />
-        <span className="font-bold text-2xl">Hotel & Travel</span>
+        <span className="font-bold text-2xl select-none">Hotel & Travel</span>
       </div>
       <div className="hidden lg:flex justify-end gap-5 items-center h-full lg:w-1/3 px-10">
         <SearchCityInput

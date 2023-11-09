@@ -15,7 +15,7 @@ const SearchInput = ({
         <input
           onChange={(e) => handleSearch(e)}
           type="text"
-          className="flex-1 py-2 bg-white outline-none w-full"
+          className="flex-1 py-2 bg-white outline-none w-full select-none"
           placeholder={placeholder}
           aria-label="Search places"
         />

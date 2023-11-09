@@ -13,7 +13,7 @@ export default {
         },
         secondary: {
           DEFAULT: "#FF361D",
-          hover: "#D1230C",
+          hover: "#FF533C",
         },
         tertiary: {
           DEFAULT: "#F1CC0E",
