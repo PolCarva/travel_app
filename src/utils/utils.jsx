@@ -1,15 +1,14 @@
 export const calculateDistance = (locationA, locationB) => {
   const lat1 = locationA.latitude;
   const lng1 = locationA.longitude;
-  const lat2 = locationB.latitude;
-  const lng2 = locationB.longitude;
+  const lat2 = locationB.lat;
+  const lng2 = locationB.lng;
 
   // Fórmula de la distancia euclidiana entre dos puntos en un plano
   const distance = Math.sqrt(
     Math.pow(lat2 - lat1, 2) + Math.pow(lng2 - lng1, 2)
   );
 
-  console.log(distance);
   return distance;
 };
 

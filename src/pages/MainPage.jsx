@@ -19,14 +19,15 @@ const MainPage = () => {
   const [listedPlaces, setListedPlaces] = useState([]);
   const [showLikeList, setShowLikeList] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
-  const [filter, setFilter] = useState({
-    type: "restaurants",
-    sortBy: "closest",
-    accesible: false,
-  });
   const { latitude, longitude } = useLocationStore((state) => state);
   const { liked } = useLikedStore((state) => state);
   const [center, setCenter] = useState({ latitude, longitude });
+
+  const [filter, setFilter] = useState({
+    type: "restaurants",
+    sortBy: "rating",
+    accesible: false,
+  });
 
   useEffect(() => {
     const params = {
@@ -97,11 +98,10 @@ const MainPage = () => {
 
     // Luego ordenar por calificación
     filteredPlaces.sort((a, b) => {
-      if (filter.sortBy === "raiting") {
+      if (filter.sortBy === "rating") {
         // Si el filtro es 'higher', ordena de mayor a menor calificación
         return b.rating - a.rating;
-      } else if (filter.sortBy === "closer") {
-        console.log(a.location, b.location);
+      } else {
         // Si el filtro es 'closest', ordena de más cercano a más lejano
         const distanceA = calculateDistance(a.location, center);
         const distanceB = calculateDistance(b.location, center);
