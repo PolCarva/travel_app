@@ -31,8 +31,8 @@ const MainPage = () => {
 
   useEffect(() => {
     const params = {
-      lat: latitude,
-      lng: longitude,
+      lat: center.lat,
+      lng: center.lng,
       radius: 1000,
       type: filter.type,
     };
@@ -46,7 +46,7 @@ const MainPage = () => {
       setData([]);
       setListedPlaces([]);
     };
-  }, [latitude, longitude, filter.type]);
+  }, [center, filter.type]);
 
   useEffect(() => {
     handleFilter();
@@ -73,7 +73,7 @@ const MainPage = () => {
       lat: lat,
       lng: lng,
       radius: 1000,
-      type: "restaurants",
+      type: filter.type,
     };
 
     getPlacesData(params).then((response) => {
@@ -98,7 +98,7 @@ const MainPage = () => {
         // Si el filtro es 'rating', ordena de mayor a menor calificación
         return b.rating - a.rating;
       } else {
-        // Si el filtro es 'closest', ordena de más cercano a más lejano
+        // Si el filtro es 'closest' / default, ordena de más cercano a más lejano
         const distanceA = calculateDistance(a.location, center);
         const distanceB = calculateDistance(b.location, center);
         return distanceA - distanceB;
