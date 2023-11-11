@@ -9,10 +9,15 @@ const Header = ({
   handleSearch,
   toggleFilter,
   onPlaceSelected,
+  isMap,
 }) => {
   return (
     <header className="h-[20vh] flex justify-between">
-      <div className="flex justify-between gap-5 items-center h-full w-full lg:w-1/3 px-5 lg:px-10">
+      <div
+        className={`${
+          isMap ? "w-fit" : "w-full"
+        } flex justify-between gap-5 items-center h-full lg:w-1/3 px-5 lg:px-10`}
+      >
         <div
           className="p-3 shadow-custom rounded-full cursor-pointer hover:scale-110 transition-transform ease-in-out duration-300 group"
           onClick={toggleLikedList}
@@ -23,12 +28,13 @@ const Header = ({
             }`}
           />
         </div>
-        <div></div>
-        <SearchInput
-          placeholder={"Search Places"}
-          onFilterClick={toggleFilter}
-          handleSearch={handleSearch}
-        />
+        <div className={`${isMap ? "hidden lg:block" : "block"} w-full`}>
+          <SearchInput
+            placeholder={"Filter by name"}
+            onFilterClick={toggleFilter}
+            handleSearch={handleSearch}
+          />
+        </div>
       </div>
       <div className="hidden lg:flex gap-5 justify-center items-center h-full lg:w-1/3">
         <img
@@ -38,7 +44,11 @@ const Header = ({
         />
         <span className="font-bold text-2xl select-none">Hotel & Travel</span>
       </div>
-      <div className="hidden lg:flex justify-end gap-5 items-center h-full lg:w-1/3 px-10">
+      <div
+        className={`${
+          isMap ? "flex" : "hidden lg:flex"
+        } lg:justify-end items-center h-full pr-4 w-full lg:w-1/3 lg:px-10`}
+      >
         <SearchCityInput
           onPlaceSelected={onPlaceSelected}
           enableFilter={false}

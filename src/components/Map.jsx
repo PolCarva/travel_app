@@ -1,5 +1,7 @@
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 
+import { BiTargetLock } from "react-icons/bi";
+
 import useLocationStore from "../store/locationStore";
 import { useEffect, useMemo, useRef, useState } from "react";
 import SelectedPlace from "./SelectedPlace";
@@ -95,6 +97,12 @@ const Map = ({
         options={mapOptions}
         onLoad={(mapInstance) => (mapRef.current = mapInstance)}
       >
+        <div
+          onClick={() => setCenter({ lat: latitude, lng: longitude })}
+          className="bg-white hover:bg-white-hover cursor-pointer transition-colors ease-in-out p-2 rounded-full absolute top-2 left-2 shadow-custom"
+        >
+          <BiTargetLock className="w-8 h-8 lg:w-6 lg:h-6"/>
+        </div>
         <MarkerF
           animation={google.maps.Animation.DROP}
           position={center}

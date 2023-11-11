@@ -42,10 +42,7 @@ const MainPage = () => {
         setListedPlaces(response);
       });
 
-    return () => {
-      setData([]);
-      setListedPlaces([]);
-    };
+    handleFilter();
   }, [center, filter.type]);
 
   useEffect(() => {
@@ -115,6 +112,7 @@ const MainPage = () => {
         onPlaceSelected={onPlaceSelected}
         handleSearch={handleSearch}
         showLikeList={showLikeList}
+        isMap={tab === "map"}
         toggleLikedList={() => {
           setTab("list");
           setShowLikeList(!showLikeList);
