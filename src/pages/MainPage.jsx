@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import { getPlacesData } from "../api";
 
+import { calculateDistance } from "../utils/utils";
+
 import useLocationStore from "../store/locationStore";
 import useLikedStore from "../store/likedStore";
 
@@ -17,6 +19,11 @@ const MainPage = () => {
   const [listedPlaces, setListedPlaces] = useState([]);
   const [showLikeList, setShowLikeList] = useState(false);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [filter, setFilter] = useState({
+    type: "restaurants",
+    sortBy: "closest",
+    accesible: false,
+  });
   const { latitude, longitude } = useLocationStore((state) => state);
   const { liked } = useLikedStore((state) => state);
   const [center, setCenter] = useState({ latitude, longitude });
@@ -78,6 +85,33 @@ const MainPage = () => {
     });
   };
 
+  const handleFilter = () => {
+    const showingList = showLikeList ? liked : data;
+
+    // Filtrar primero por accesibilidad para sillas de ruedas si es necesario
+    let filteredPlaces = showingList.filter((place) =>
+      filter.accesible
+        ? place.accessibilityOptions?.wheelchairAccessibleEntrance
+        : true
+    );
+
+    // Luego ordenar por calificación
+    filteredPlaces.sort((a, b) => {
+      if (filter.sortBy === "raiting") {
+        // Si el filtro es 'higher', ordena de mayor a menor calificación
+        return b.rating - a.rating;
+      } else if (filter.sortBy === "closer") {
+        console.log(a.location, b.location);
+        // Si el filtro es 'closest', ordena de más cercano a más lejano
+        const distanceA = calculateDistance(a.location, center);
+        const distanceB = calculateDistance(b.location, center);
+        return distanceA - distanceB;
+      }
+    });
+
+    setListedPlaces(filteredPlaces);
+  };
+
   return (
     <div className="w-full h-[100svh] flex flex-col relative overflow-hidden">
       <Header
@@ -94,7 +128,7 @@ const MainPage = () => {
         <List
           places={listedPlaces}
           className={`${
-            tab === "list" ? "w-full p-10" : "w-0 p-0 overflow-hidden"
+            tab === "list" ? "w-full p-10" : "w-0 p-0 pb-10 overflow-hidden"
           } lg:w-1/3 lg:px-10 h-full !overflow-y-scroll flex flex-col gap-2 items-center transition-all duration-300 ease-in-out`}
         />
         <Map
@@ -107,7 +141,14 @@ const MainPage = () => {
           } lg:w-2/3 h-full transition-all duration-300 ease-in-out`}
         />
       </div>
-        <FilterContainer isOpen={filterOpen}  closeFilter={() => setFilterOpen(!filterOpen)}/>
+      <FilterContainer
+        filter={filter}
+        setFilter={setFilter}
+        isOpen={filterOpen}
+        closeFilter={() => setFilterOpen(!filterOpen)}
+        onFilter={handleFilter}
+      />
+
       <Footer tab={tab} setTab={setTab} setShowLikeList={setShowLikeList} />
     </div>
   );

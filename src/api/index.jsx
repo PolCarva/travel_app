@@ -6,7 +6,7 @@ import { data } from "../constants/data";
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export const getPlacesData = async ({ lat, lng, radius, type }) => {
-  return data; //Remove line on production
+  return data; //Remove line on productio
   try {
     let category = [];
 
@@ -69,7 +69,6 @@ export const getPlacesData = async ({ lat, lng, radius, type }) => {
     );
 
     if (response.data.places) {
-      console.log(response.data);
       return response.data.places;
     }
   } catch (error) {
@@ -78,6 +77,3 @@ export const getPlacesData = async ({ lat, lng, radius, type }) => {
   }
 };
 
-export const getAutocompleteData = async (input) => {
-
-}

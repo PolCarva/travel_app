@@ -1,26 +1,43 @@
 import React, { useState } from "react";
 import { FaAngleLeft } from "react-icons/fa6";
-import Slider from "@mui/material/Slider";
 
 import FilterBtn from "./FilterBtn";
+import { FormControlLabel, FormGroup, Switch } from "@mui/material";
 
-const FilterContainer = ({ isOpen, closeFilter }) => {
-  const [filter, setFilter] = useState({
-    type: "restaurants",
-    rating: "bests",
-    distance: 2000,
-  });
+const FilterContainer = ({
+  isOpen,
+  closeFilter,
+  onFilter,
+  filter,
+  setFilter,
+}) => {
+  const [isClosest, setIsClosest] = useState(filter.closer);
+  const [isWheelchairAccessible, setIsWheelchairAccessible] = useState(
+    filter.accesible
+  );
 
   const handleTypeChange = (value) => {
     setFilter({ ...filter, type: value });
   };
 
-  const handleRatingChange = (value) => {
-    setFilter({ ...filter, rating: value });
+  const handleSortByChange = (value) => {
+    setFilter({ ...filter, sortBy: value });
   };
 
-  const handleDistanceChange = (value) => {
-    setFilter({ ...filter, distance: value });
+  const handleWheelchairAccessibleChange = (event) => {
+    setIsWheelchairAccessible(event.target.checked);
+    setFilter({ ...filter, accesible: event.target.checked }); // Envía el valor booleano al cambio de filtro
+  };
+
+  const handleCleaeFilter = () => {
+    setFilter({
+      type: "restaurants",
+      rating: "higher",
+      closer: false,
+      accesible: false,
+    });
+    setIsClosest(false);
+    setIsWheelchairAccessible(false);
   };
 
   return (
@@ -40,7 +57,7 @@ const FilterContainer = ({ isOpen, closeFilter }) => {
           <h1 className="text-2xl font-bold text-center h-full">Filters</h1>
         </div>
         <div className="w-full px-5 pb-5 h-full flex flex-col gap-5">
-          <div className="flex-1 flex flex-col gap-2">
+          <div className="flex-1 flex flex-col gap-5">
             <div className="flex flex-col gap-2">
               <h3 className="text-black font-bold">Type:</h3>
               <div className="flex gap-2 justify-stretch">
@@ -65,77 +82,56 @@ const FilterContainer = ({ isOpen, closeFilter }) => {
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <h3 className="text-black font-bold">Raiting:</h3>
+              <h3 className="text-black font-bold">Sort by:</h3>
               <div className="flex gap-2 justify-stretch">
                 <FilterBtn
-                  value={"worsts"}
-                  isActive={filter.rating === "worsts"}
-                  text={"Worsts"}
-                  handleChange={handleRatingChange}
+                  value={"closest"}
+                  isActive={filter.sortBy === "closest"}
+                  text={"Closest"}
+                  handleChange={handleSortByChange}
                 />
                 <FilterBtn
-                  value={"all"}
-                  isActive={filter.rating === "all"}
-                  text={"All"}
-                  handleChange={handleRatingChange}
-                />
-                <FilterBtn
-                  value={"bests"}
-                  isActive={filter.rating === "bests"}
-                  text={"Bests"}
-                  handleChange={handleRatingChange}
+                  value={"rating"}
+                  isActive={filter.sortBy === "rating"}
+                  text={"Higher Raiting"}
+                  handleChange={handleSortByChange}
                 />
               </div>
             </div>
             <div className="flex flex-col gap-2">
-              <h3 className="text-black font-bold">Raiting:</h3>
+              <h3 className="text-black font-bold">Accesibility:</h3>
               <div className="flex gap-2 justify-stretch">
-                <FilterBtn
-                  value={"worsts"}
-                  isActive={filter.rating === "worsts"}
-                  text={"Worsts"}
-                  handleChange={handleRatingChange}
-                />
-                <FilterBtn
-                  value={"all"}
-                  isActive={filter.rating === "all"}
-                  text={"All"}
-                  handleChange={handleRatingChange}
-                />
-                <FilterBtn
-                  value={"bests"}
-                  isActive={filter.rating === "bests"}
-                  text={"Bests"}
-                  handleChange={handleRatingChange}
-                />
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Switch
+                        checked={isWheelchairAccessible}
+                        onChange={handleWheelchairAccessibleChange}
+                      />
+                    }
+                    label="Wheelchair Accessible"
+                    labelPlacement="end"
+                  />
+                </FormGroup>
               </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <h3 className="text-black font-bold">Distance:</h3>
-              <div className="flex flex-col px-2">
-                <Slider
-                  defaultValue={1000}
-                  getAriaValueText={(value) => `${value}m`}
-                  aria-labelledby="discrete-slider"
-                  step={100}
-                  min={1000}
-                  max={5000}
-                  valueLabelDisplay="auto"
-                  onChange={(event, newValue) => handleDistanceChange(newValue)}
-                />
-              <div>
-                <span className="text-gray-50">1000m</span>
-                <span className="text-gray-50 float-right">5000m</span>
-              </div>
-              </div>
-            </div>
+            <div className="flex flex-col gap-2"></div>
           </div>
           <div className=" flex-shrink-0 text-white">
             <div className="flex gap-5 flex-col md:flex-row">
-              <button className="border bg-white hover:bg-white-hover transition-colors duration-300 ease-in-out text-black border-black flex-1 py-2 px-1 rounded-lg">
+              <button
+                onClick={handleCleaeFilter}
+                className="border bg-white hover:bg-white-hover transition-colors duration-300 ease-in-out text-black border-black flex-1 py-2 px-1 rounded-lg"
+              >
                 Clear Filters
               </button>
-              <button className="bg-black flex-1 py-2 px-1 rounded-lg hover:bg-black-hover transition-colors duration-300 ease-in-out">
+              <button
+                onClick={() => {
+                  closeFilter();
+                  onFilter();
+                }}
+                className="bg-black flex-1 py-2 px-1 rounded-lg hover:bg-black-hover transition-colors duration-300 ease-in-out"
+              >
                 Save Changes
               </button>
             </div>

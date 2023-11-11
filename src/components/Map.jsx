@@ -1,12 +1,20 @@
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
 
 import useLocationStore from "../store/locationStore";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import SelectedPlace from "./SelectedPlace";
+
+import { getDistance } from "../utils/utils";
 
 const libraries = ["places"];
 
-const Map = ({ className, places, category = "restaurants", setCenter, center }) => {
+const Map = ({
+  className,
+  places,
+  category = "restaurants",
+  setCenter,
+  center,
+}) => {
   const { latitude, longitude } = useLocationStore((state) => state);
   const userCoordinates = { lat: latitude, lng: longitude };
   const mapRef = useRef(null);
@@ -18,15 +26,24 @@ const Map = ({ className, places, category = "restaurants", setCenter, center })
 
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
-    libraries: libraries,
+    libraries: useMemo(() => libraries, []),
   });
 
   const handleMarkerClick = (place) => {
-    setSelectedPlace(place);
+    const location = {
+      lat: place.location.latitude,
+      lng: place.location.longitude,
+    };
+
+    getDistance(userCoordinates, location).then((time) => {
+      setSelectedPlace({ ...place, walkingTime: time });
+    });
+
     const newCenter = {
       lat: place.location.latitude,
       lng: place.location.longitude,
     };
+
     if (mapRef.current) {
       mapRef.current.panTo(newCenter);
       if (mapRef.current.getZoom() !== 17) {
