@@ -34,7 +34,7 @@ const MainPage = () => {
       lat: latitude,
       lng: longitude,
       radius: 1000,
-      type: "restaurants",
+      type: filter.type,
     };
     (latitude || longitude) && //Espera a que los valores de latitud y longitud estén disponibles
       getPlacesData(params).then((response) => {
@@ -46,15 +46,11 @@ const MainPage = () => {
       setData([]);
       setListedPlaces([]);
     };
-  }, [latitude, longitude]);
+  }, [latitude, longitude, filter.type]);
 
   useEffect(() => {
-    if (showLikeList) {
-      setListedPlaces(liked);
-    } else {
-      setListedPlaces(data);
-    }
-  }, [showLikeList, liked, data]); //Agregar liked si quiero eliminar de la lista al deslikear
+    handleFilter();
+  }, [showLikeList, liked, data, filter]); //Agregar liked si quiero eliminar de la lista al deslikear
 
   /* Filter places by name */
   const handleSearch = (e) => {
@@ -89,17 +85,17 @@ const MainPage = () => {
   const handleFilter = () => {
     const showingList = showLikeList ? liked : data;
 
-    // Filtrar primero por accesibilidad para sillas de ruedas si es necesario
+    // Filtra por accesibilidad para sillas de ruedas
     let filteredPlaces = showingList.filter((place) =>
       filter.accesible
         ? place.accessibilityOptions?.wheelchairAccessibleEntrance
         : true
     );
 
-    // Luego ordenar por calificación
+    // Desupués ordena por calificación
     filteredPlaces.sort((a, b) => {
       if (filter.sortBy === "rating") {
-        // Si el filtro es 'higher', ordena de mayor a menor calificación
+        // Si el filtro es 'rating', ordena de mayor a menor calificación
         return b.rating - a.rating;
       } else {
         // Si el filtro es 'closest', ordena de más cercano a más lejano
@@ -135,7 +131,7 @@ const MainPage = () => {
           center={center}
           setCenter={setCenter}
           places={data}
-          category="restaurants"
+          category={filter.type}
           className={`${
             tab === "map" ? "w-full" : "w-0"
           } lg:w-2/3 h-full transition-all duration-300 ease-in-out`}
@@ -146,7 +142,6 @@ const MainPage = () => {
         setFilter={setFilter}
         isOpen={filterOpen}
         closeFilter={() => setFilterOpen(!filterOpen)}
-        onFilter={handleFilter}
       />
 
       <Footer tab={tab} setTab={setTab} setShowLikeList={setShowLikeList} />

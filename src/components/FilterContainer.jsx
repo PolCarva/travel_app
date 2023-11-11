@@ -7,37 +7,40 @@ import { FormControlLabel, FormGroup, Switch } from "@mui/material";
 const FilterContainer = ({
   isOpen,
   closeFilter,
-  onFilter,
-  filter,
+  filter: initialFilter,
   setFilter,
 }) => {
-  const [isClosest, setIsClosest] = useState(filter.closer);
+  const [tempFilter, setTempFilter] = useState({ ...initialFilter });
   const [isWheelchairAccessible, setIsWheelchairAccessible] = useState(
-    filter.accesible
+    tempFilter.accesible
   );
 
   const handleTypeChange = (value) => {
-    setFilter({ ...filter, type: value });
+    setTempFilter({ ...tempFilter, type: value });
   };
 
   const handleSortByChange = (value) => {
-    setFilter({ ...filter, sortBy: value });
+    setTempFilter({ ...tempFilter, sortBy: value });
   };
 
   const handleWheelchairAccessibleChange = (event) => {
-    setIsWheelchairAccessible(event.target.checked);
-    setFilter({ ...filter, accesible: event.target.checked }); // Envía el valor booleano al cambio de filtro
+    const isChecked = event.target.checked;
+    setIsWheelchairAccessible(isChecked);
+    setTempFilter({ ...tempFilter, accesible: isChecked });
   };
 
-  const handleCleaeFilter = () => {
-    setFilter({
+  const handleClearFilter = () => {
+    setTempFilter({
       type: "restaurants",
-      rating: "higher",
-      closer: false,
+      sortBy: "rating",
       accesible: false,
     });
-    setIsClosest(false);
     setIsWheelchairAccessible(false);
+  };
+
+  const applyFilters = () => {
+    setFilter({ ...tempFilter });
+    closeFilter(); // Cierra el contenedor de filtros
   };
 
   return (
@@ -63,19 +66,19 @@ const FilterContainer = ({
               <div className="flex gap-2 justify-stretch">
                 <FilterBtn
                   value={"attractions"}
-                  isActive={filter.type === "attractions"}
+                  isActive={tempFilter.type === "attractions"}
                   text={"Attractions"}
                   handleChange={handleTypeChange}
                 />
                 <FilterBtn
                   value={"restaurants"}
-                  isActive={filter.type === "restaurants"}
+                  isActive={tempFilter.type === "restaurants"}
                   text={"Restaurants"}
                   handleChange={handleTypeChange}
                 />
                 <FilterBtn
                   value={"hotels"}
-                  isActive={filter.type === "hotels"}
+                  isActive={tempFilter.type === "hotels"}
                   text={"Hotels"}
                   handleChange={handleTypeChange}
                 />
@@ -86,13 +89,13 @@ const FilterContainer = ({
               <div className="flex gap-2 justify-stretch">
                 <FilterBtn
                   value={"closest"}
-                  isActive={filter.sortBy === "closest"}
+                  isActive={tempFilter.sortBy === "closest"}
                   text={"Closest"}
                   handleChange={handleSortByChange}
                 />
                 <FilterBtn
                   value={"rating"}
-                  isActive={filter.sortBy === "rating"}
+                  isActive={tempFilter.sortBy === "rating"}
                   text={"Higher Raiting"}
                   handleChange={handleSortByChange}
                 />
@@ -120,16 +123,13 @@ const FilterContainer = ({
           <div className=" flex-shrink-0 text-white">
             <div className="flex gap-5 flex-col md:flex-row">
               <button
-                onClick={handleCleaeFilter}
+                onClick={handleClearFilter}
                 className="border bg-white hover:bg-white-hover transition-colors duration-300 ease-in-out text-black border-black flex-1 py-2 px-1 rounded-lg"
               >
                 Clear Filters
               </button>
               <button
-                onClick={() => {
-                  closeFilter();
-                  onFilter();
-                }}
+                onClick={applyFilters}
                 className="bg-black flex-1 py-2 px-1 rounded-lg hover:bg-black-hover transition-colors duration-300 ease-in-out"
               >
                 Save Changes
