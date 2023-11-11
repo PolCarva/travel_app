@@ -122,8 +122,8 @@ const MainPage = () => {
         <List
           places={listedPlaces}
           className={`${
-            tab === "list" ? "w-full p-10" : "w-0 p-0 pb-10 overflow-hidden"
-          } lg:w-1/3 lg:px-10 h-full !overflow-y-scroll flex flex-col gap-2 items-center transition-all duration-300 ease-in-out`}
+            tab === "list" ? "w-full pt-2" : "w-0 pt-0 px-0 overflow-hidden"
+          } lg:w-1/3 lg:px-10 h-full p-10 !overflow-y-scroll flex flex-col gap-2 items-center transition-all duration-300 ease-in-out`}
         />
         <Map
           center={center}

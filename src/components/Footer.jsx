@@ -2,7 +2,7 @@ import TabButton from "./TabButton";
 
 const Footer = ({ setTab, tab, setShowLikeList }) => {
   return (
-    <footer className="h-[20vh] lg:hidden">
+    <footer className="h-[12vh] lg:hidden">
       <div className="flex p-5 justify-center items-center h-full w-full gap-5">
         <TabButton
           toggleActive={() => setTab("list")}
