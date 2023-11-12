@@ -3,6 +3,7 @@ import { FaStar, FaWheelchair } from "react-icons/fa";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
 import useLikedStore from "../store/likedStore";
+import { Link } from "react-router-dom";
 
 const ListCard = ({ place }) => {
   const { addLiked, removeLiked, liked } = useLikedStore((state) => state);
@@ -29,18 +30,21 @@ const ListCard = ({ place }) => {
     return [...fullStars, ...emptyStars];
   }
 
-  const handleLike = (place) => {
+  const handleLike = (e, place) => {
+    e.preventDefault();
     setIsLiked(!isLiked);
     if (isLiked) {
       removeLiked(place);
     } else {
       addLiked(place);
     }
-
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4 w-full lg:hover:scale-105 transition-transform ease-in-out cursor-pointer duration-300">
+    <Link
+      to={`/details/${place.id}`}
+      className="bg-white rounded-lg shadow-lg p-4 w-full lg:hover:scale-105 transition-transform ease-in-out cursor-pointer duration-300"
+    >
       <div className="relative">
         <img
           src={url}
@@ -54,7 +58,7 @@ const ListCard = ({ place }) => {
         <div className="absolute top-2 right-2">
           <div
             className="bg-white shadow-custom rounded-full p-2"
-            onClick={() => handleLike(place)}
+            onClick={(e) => handleLike(e, place)}
           >
             {isLiked ? (
               <AiFillHeart className="text-secondary w-6 h-6" />
@@ -85,7 +89,7 @@ const ListCard = ({ place }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

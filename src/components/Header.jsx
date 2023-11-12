@@ -12,7 +12,7 @@ const Header = ({
   isMap,
 }) => {
   return (
-    <header className="lg:h-[20vh] h-[15vh] flex justify-between">
+    <header className="lg:h-1/5 h-1/6 flex justify-between">
       <div
         className={`${
           isMap ? "w-fit" : "w-full"

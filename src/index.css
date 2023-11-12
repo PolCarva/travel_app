@@ -46,9 +46,32 @@ button[title="Ampliar"]:hover, button[title="Reducir"]:hover {
 .MuiSlider-rail {
     background: #1335be !important;
 }
+
 .css-1gv0vcd-MuiSlider-track {
     background: #1335be !important;
 }
+
 .MuiSlider-thumb::before {
     background: #1335be !important;
+}
+
+.compassAnimation {
+    animation: compass 8s infinite;
+}
+
+@keyframes compass {
+    0% {
+        rotate: 0deg;
+    }
+    10% {
+        rotate: -5deg;
+    }
+
+    30% {
+        rotate: 400deg;
+    }
+
+    100% {
+        rotate: 360deg;
+    }
 }

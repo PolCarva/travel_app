@@ -118,7 +118,7 @@ const MainPage = () => {
           setShowLikeList(!showLikeList);
         }}
       />
-      <div className="h-[70vh] md:h-[80vh] flex relative overflow-hidden">
+      <div className="h-full flex relative overflow-hidden">
         <List
           places={listedPlaces}
           className={`${

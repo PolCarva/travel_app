@@ -47,7 +47,7 @@ const FilterContainer = ({
     <div
       className={`${
         isOpen ? "bottom-0" : "-bottom-full"
-      } absolute h-full w-full lg:h-[80vh] lg:w-1/3 bg-white border-t-2 z-100 transition-all duration-300 ease-in-out`}
+      } absolute h-full w-full lg:h-[calc(100%-16.666%)] lg:w-1/3 bg-white border-t-2 z-100 transition-all duration-300 ease-in-out`}
     >
       <div className="flex flex-col h-full">
         <div className="w-full p-5 relative">
