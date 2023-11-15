@@ -7,9 +7,12 @@ import { useParams, useNavigate } from "react-router-dom";
 import { getPlaceDetail, getPriceLevel } from "../api";
 
 import { placeDetail } from "../constants/data";
+import ModalPhotoSlider from "../components/ModalPhotoSlider";
 
 const DetailPage = () => {
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+  const [photoIndex, setPhotoIndex] = useState(0);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -38,7 +41,8 @@ const DetailPage = () => {
     navigate(-1);
   };
 
-  const showSlider = () => {
+  const showSlider = (photoIndex) => {
+    setActiveImage(photoIndex);
     setIsSliderVisible(true);
   };
   const hideSlider = () => setIsSliderVisible(false);
@@ -92,17 +96,17 @@ const DetailPage = () => {
           <div className="grid grid-cols-2 gap-2 grid-rows-2 h-40">
             <div
               className="w-full h-full row-span-2 rounded-lg bg-center bg-cover"
-              onClick={showSlider}
+              onClick={() => showSlider(1)}
               style={{ backgroundImage: `url(${place.photoUrls[1]})` }}
             ></div>
             <div
               className="w-full h-full rounded-lg bg-center bg-cover"
-              onClick={showSlider}
+              onClick={() => showSlider(2)}
               style={{ backgroundImage: `url(${place.photoUrls[2]})` }}
             ></div>
             <div
               className="w-full h-full relative rounded-lg bg-center bg-cover"
-              onClick={showSlider}
+              onClick={() => showSlider(3)}
               style={{ backgroundImage: `url(${place.photoUrls[3]})` }}
             >
               <div className="absolute w-10 h-6 py-0.5 bg-black bg-opacity-30 rounded-br-none rounded-md bottom-2 right-2">
@@ -113,9 +117,11 @@ const DetailPage = () => {
         </div>
       </div>
       {isSliderVisible && (
-        <div className="w-full h-full bg-black bg-opacity-30 font-bold z-50 fixed">
-          Slider
-        </div>
+        <ModalPhotoSlider
+          hideSlider={hideSlider}
+          photos={place.photoUrls}
+          index={activeImage}
+        />
       )}
     </div>
   );
