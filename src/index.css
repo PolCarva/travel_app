@@ -56,22 +56,52 @@ button[title="Ampliar"]:hover, button[title="Reducir"]:hover {
 }
 
 .compassAnimation {
-    animation: compass 8s infinite;
+    animation: compass 8s infinite ease-in-out;
 }
 
 @keyframes compass {
     0% {
         rotate: 0deg;
     }
+
     10% {
         rotate: -5deg;
     }
 
-    30% {
+    50% {
         rotate: 400deg;
     }
 
     100% {
         rotate: 360deg;
     }
+}
+
+
+
+/* SCROLLBAR */
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Agregar sombra al track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos para el thumb (el "agarre" de la barra de desplazamiento) */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+/* Cambiar el color al pasar el mouse sobre el thumb */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }

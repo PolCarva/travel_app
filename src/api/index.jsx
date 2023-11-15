@@ -77,3 +77,37 @@ export const getPlacesData = async ({ lat, lng, radius, type }) => {
   }
 };
 
+export const getPlaceDetail = async (placeId) => {
+  try {
+    const headers = {
+      "X-Goog-Api-Key": apiKey,
+      "X-Goog-FieldMask": "*",
+    };
+
+    const response = await axios.get(
+      `${BASE_PLACES_URL}/v1/places/${placeId}`,
+      { headers: headers }
+    );
+    return response.data;
+  } catch (error) {
+    console.error("Error al hacer la solicitud a la API:", error);
+    throw error;
+  }
+};
+
+export const getPriceLevel = (nivelDePrecio) => {
+  switch (nivelDePrecio) {
+    case "PRICE_LEVEL_FREE":
+      return "Gratis";
+    case "PRICE_LEVEL_INEXPENSIVE":
+      return "$";
+    case "PRICE_LEVEL_MODERATE":
+      return "$$";
+    case "PRICE_LEVEL_EXPENSIVE":
+      return "$$$";
+    case "PRICE_LEVEL_VERY_EXPENSIVE":
+      return "$$$$";
+    default:
+      return "$$";
+  }
+};

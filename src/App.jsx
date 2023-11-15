@@ -3,7 +3,7 @@ import MainPage from "./pages/MainPage";
 import DetailPage from "./pages/DetailPage";
 import ErrorPage from "./pages/ErrorPage";
 import { useEffect } from "react";
-import useLocationStore from "./store/locationStore";
+import useLocationStore from "./store/useLocationStore";
 
 function App() {
   const setLocation = useLocationStore((state) => state.setLocation);

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaStar, FaWheelchair } from "react-icons/fa";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
 
-import useLikedStore from "../store/likedStore";
+import useLikedStore from "../store/useLikedStore";
 import { Link } from "react-router-dom";
 
 const ListCard = ({ place }) => {
@@ -42,7 +42,7 @@ const ListCard = ({ place }) => {
 
   return (
     <Link
-      to={`/details/${place.id}`}
+      to={`/detail/${place.id}`}
       className="bg-white rounded-lg shadow-lg p-4 w-full lg:hover:scale-105 transition-transform ease-in-out cursor-pointer duration-300"
     >
       <div className="relative">

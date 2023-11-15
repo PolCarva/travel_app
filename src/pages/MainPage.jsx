@@ -4,8 +4,8 @@ import { getPlacesData } from "../api";
 
 import { calculateDistance } from "../utils/utils";
 
-import useLocationStore from "../store/locationStore";
-import useLikedStore from "../store/likedStore";
+import useLocationStore from "../store/useLocationStore";
+import useLikedStore from "../store/useLikedStore";
 
 import Header from "../components/Header";
 import Map from "../components/Map";
