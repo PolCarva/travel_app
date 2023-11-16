@@ -83,14 +83,14 @@ const MainPage = () => {
     const showingList = showLikeList ? liked : data;
 
     // Filtra por accesibilidad para sillas de ruedas
-    let filteredPlaces = showingList.filter((place) =>
+    let filteredPlaces = showingList?.filter((place) =>
       filter.accesible
         ? place.accessibilityOptions?.wheelchairAccessibleEntrance
         : true
     );
 
     // Desupués ordena por calificación
-    filteredPlaces.sort((a, b) => {
+    filteredPlaces?.sort((a, b) => {
       if (filter.sortBy === "rating") {
         // Si el filtro es 'rating', ordena de mayor a menor calificación
         return b.rating - a.rating;

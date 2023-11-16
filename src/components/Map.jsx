@@ -117,7 +117,7 @@ const Map = ({
             scaledSize: { width: 60, height: 60 },
           }}
         />
-        {places.map((place) => (
+        {places?.map((place) => (
           <MarkerF
             icon={{
               url: `/img/${category}-location.png`,

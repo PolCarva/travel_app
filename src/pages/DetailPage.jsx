@@ -58,14 +58,18 @@ const DetailPage = () => {
     <div className="relative min-h-[100svh]">
       <div
         onClick={handleBackBtn}
-        className="absolute grid content-center w-10 h-10 p-2 top-4 left-4 bg-white rounded-full z-10 bg-opacity-30"
+        className="absolute grid content-center w-10 h-10 p-2 top-4 left-4 bg-white rounded-full z-10 bg-opacity-30 shadow-custom"
       >
         <FaAngleLeft className="w-full h-full text-white" />
       </div>
       <img
-        src={place.photoUrls[0]}
+        src={place.photoUrls[0] || "https://via.placeholder.com/150"}
         alt={place.displayName.text}
-        className="absolute top-0 right-1/2 translate-x-[50%] w-full h-2/5 object-cover z-0"
+        className="absolute top-0 right-1/2 translate-x-[50%] w-full h-2/5 object-cover z-0 bg-gray-50"
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = "https://via.placeholder.com/150";
+        }}
       />
       <div className="absolute z-10 top-1/3 h-full w-full rounded-3xl p-6 pt-5 bg-white flex flex-col gap-2">
         <div className="flex justify-between">
@@ -98,28 +102,32 @@ const DetailPage = () => {
           <span className="text-sm">{place.formattedAddress}</span>
         </div>
         <div className="flex flex-col gap-5 mt-3">
-          <h2 className="text-2xl font-bold">Gallery Photo</h2>
-          <div className="grid grid-cols-2 gap-2 grid-rows-2 h-40">
-            <div
-              className="w-full h-full row-span-2 rounded-lg bg-center bg-cover"
-              onClick={() => showSlider(1)}
-              style={{ backgroundImage: `url(${place.photoUrls[1]})` }}
-            ></div>
-            <div
-              className="w-full h-full rounded-lg bg-center bg-cover"
-              onClick={() => showSlider(2)}
-              style={{ backgroundImage: `url(${place.photoUrls[2]})` }}
-            ></div>
-            <div
-              className="w-full h-full relative rounded-lg bg-center bg-cover"
-              onClick={() => showSlider(3)}
-              style={{ backgroundImage: `url(${place.photoUrls[3]})` }}
-            >
-              <div className="absolute w-10 h-6 py-0.5 bg-black bg-opacity-30 rounded-br-none rounded-md bottom-2 right-2">
-                <FaImages className="w-full h-full text-white" />
+          {place.photoUrls?.length > 4 && (
+            <>
+              <h2 className="text-2xl font-bold">Gallery Photo</h2>
+              <div className="grid grid-cols-2 gap-2 grid-rows-2 h-40">
+                <div
+                  className="w-full h-full row-span-2 rounded-lg bg-center bg-cover"
+                  onClick={() => showSlider(1)}
+                  style={{ backgroundImage: `url(${place.photoUrls[1]})` }}
+                ></div>
+                <div
+                  className="w-full h-full rounded-lg bg-center bg-cover"
+                  onClick={() => showSlider(2)}
+                  style={{ backgroundImage: `url(${place.photoUrls[2]})` }}
+                ></div>
+                <div
+                  className="w-full h-full relative rounded-lg bg-center bg-cover"
+                  onClick={() => showSlider(3)}
+                  style={{ backgroundImage: `url(${place.photoUrls[3]})` }}
+                >
+                  <div className="absolute w-10 h-6 py-0.5 bg-black bg-opacity-30 rounded-br-none rounded-md bottom-2 right-2">
+                    <FaImages className="w-full h-full text-white" />
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </div>
       {isSliderVisible && (

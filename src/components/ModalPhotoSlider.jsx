@@ -31,10 +31,10 @@ const ModalPhotoSlider = ({ hideSlider, photos, index }) => {
       </button>
       <FaAngleLeft
         onClick={handlePrevPhoto}
-        className="fixed top-1/2 translate-y-[-50%]  left-4 text-white w-8 h-8"
+        className="fixed top-1/2 translate-y-[-50%] left-4 text-white w-8 h-8"
       />
-      <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-fit h-fit max-h-96 object-cover bg-red-50 z-50">
-        <img src={photos[activeIndex]} alt={photos[activeIndex]} />
+      <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-fit min-w-[70%] h-96 flex justify-center items-center object-cover z-50">
+        <img src={photos[activeIndex]} alt={photos[activeIndex]}/>
       </div>
       <FaAngleRight
         className="fixed top-1/2 translate-y-[-50%] right-4 text-white w-8 h-8"

@@ -1,12 +1,12 @@
 import React from "react";
 import { FaWheelchair, FaStar } from "react-icons/fa";
 import { FaPersonWalking } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const SelectedPlace = ({ place }) => {
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
   const photoName = place.photos && place.photos[0].name;
-  const url = `https://places.googleapis.com/v1/${photoName}/media?key=${apiKey}&maxWidthPx=400` || "https://via.placeholder.com/150";
-  //const url = "https://via.placeholder.com/150";
+  const url = `https://places.googleapis.com/v1/${photoName}/media?key=${apiKey}&maxWidthPx=400`;
 
   function renderStars(rating = 0) {
     const fullStars = Array(Math.floor(rating))
@@ -23,7 +23,7 @@ const SelectedPlace = ({ place }) => {
   }
 
   return (
-    <div className="absolute flex gap-4 bottom-5 right-1/2 translate-x-[50%] bg-white w-11/12 md:w-3/5 lg:w-1/2 h-1/4 rounded-lg py-2 px-3">
+    <Link to={`/detail/${place.id}`} className="absolute flex gap-4 bottom-5 right-1/2 translate-x-[50%] bg-white w-11/12 md:w-3/5 lg:w-1/2 h-1/4 rounded-lg py-2 px-3">
       <div className="flex-1 flex flex-col justify-around">
         <div className="flex flex-col gap-0.5">
           <h2 className="font-bold text-black text-lg leading-5 line-clamp-2">
@@ -61,9 +61,9 @@ const SelectedPlace = ({ place }) => {
           e.target.src = "https://via.placeholder.com/150";
         }}
         alt={place.displayName || "Place"}
-        className="h-full object-cover aspect-square rounded-lg"
+        className="h-full object-cover aspect-square rounded-lg bg-gray-50"
       />
-    </div>
+    </Link>
   );
 };
 
