@@ -12,8 +12,6 @@ import ModalPhotoSlider from "../components/ModalPhotoSlider";
 const DetailPage = () => {
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
-  const [photoIndex, setPhotoIndex] = useState(0);
-
   const navigate = useNavigate();
   const { id } = useParams();
   const [place, setPlace] = useState(null);
@@ -22,19 +20,27 @@ const DetailPage = () => {
   const [activeImage, setActiveImage] = useState(0);
 
   useEffect(() => {
-    setPlace(placeDetail);
-    return;
+    /* setPlace(placeDetail);
+    return; */
     getPlaceDetail(id).then((response) => {
-      const updatedPlace = {
-        ...response,
-        photoUrls: response.photos.map(
-          (photo) =>
-            `https://places.googleapis.com/v1/${photo.name}/media?key=${apiKey}&maxWidthPx=400`
-        ),
-      };
-      setPlace(updatedPlace);
+      if (response.photos) {
+        const updatedPlace = {
+          ...response,
+          photoUrls: response.photos?.map(
+            (photo) =>
+              `https://places.googleapis.com/v1/${photo.name}/media?key=${apiKey}&maxWidthPx=400`
+          ),
+        };
+        setPlace(updatedPlace);
+      } else {
+        setPlace({
+          ...response,
+          photoUrls: [
+            `https://places.googleapis.com/v1/${response.name}/media?key=${apiKey}&maxWidthPx=400`,
+          ],
+        });
+      }
     });
-    console.log(place.photoUrls);
   }, [id]);
 
   const handleBackBtn = () => {

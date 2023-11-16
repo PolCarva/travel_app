@@ -6,8 +6,8 @@ import { data } from "../constants/data";
 const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 export const getPlacesData = async ({ lat, lng, radius, type }) => {
-  return data; //Remove line on productio
-  try {
+/*   return data; //Remove line on productio
+ */  try {
     let category = [];
 
     switch (type) {
@@ -88,6 +88,7 @@ export const getPlaceDetail = async (placeId) => {
       `${BASE_PLACES_URL}/v1/places/${placeId}`,
       { headers: headers }
     );
+    console.log(response.data);
     return response.data;
   } catch (error) {
     console.error("Error al hacer la solicitud a la API:", error);

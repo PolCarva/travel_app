@@ -5,8 +5,8 @@ import { FaPersonWalking } from "react-icons/fa6";
 const SelectedPlace = ({ place }) => {
   const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
   const photoName = place.photos && place.photos[0].name;
-  //const url = `https://places.googleapis.com/v1/${photoName}/media?key=${apiKey}&maxWidthPx=400` || "https://via.placeholder.com/150";
-  const url = "https://via.placeholder.com/150";
+  const url = `https://places.googleapis.com/v1/${photoName}/media?key=${apiKey}&maxWidthPx=400` || "https://via.placeholder.com/150";
+  //const url = "https://via.placeholder.com/150";
 
   function renderStars(rating = 0) {
     const fullStars = Array(Math.floor(rating))
