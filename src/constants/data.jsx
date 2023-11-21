@@ -3776,8 +3776,9 @@ export const data = [
       },
     ],
     accessibilityOptions: {
-      wheelchairAccessibleParking: false,
-      wheelchairAccessibleSeating: false,
+      wheelchairAccessibleEntrance: true,
+      wheelchairAccessibleRestroom: true,
+      wheelchairAccessibleSeating: true,
     },
   },
   {
@@ -3984,14 +3985,13 @@ export const data = [
 
 export const placeDetail = {
   photoUrls: [
-    "https://via.placeholder.com/150",
-    "https://via.placeholder.com/250",
-    "https://via.placeholder.com/350",
-    "https://via.placeholder.com/450",
-    "https://via.placeholder.com/550",
-    "https://via.placeholder.com/350",
-    "https://via.placeholder.com/360",
-    "https://via.placeholder.com/350",
+    "https://picsum.photos/200/300",
+    "/img/sample.jpg",
+    "/img/sample.jpg",
+    "/img/sample.jpg",
+    "/img/sample.jpg",
+    "/img/sample.jpg",
+    "/img/sample.jpg",
   ],
   name: "places/ChIJgaYHmR6Bn5URy8ZbXgu56Uw",
   id: "ChIJgaYHmR6Bn5URy8ZbXgu56Uw",
@@ -4640,7 +4640,8 @@ export const placeDetail = {
     acceptsNfc: true,
   },
   accessibilityOptions: {
-    wheelchairAccessibleParking: false,
+    wheelchairAccessibleEntrance: true,
+    wheelchairAccessibleRestroom: true,
     wheelchairAccessibleSeating: true,
   },
 };

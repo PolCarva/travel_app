@@ -22,22 +22,22 @@ const ModalPhotoSlider = ({ hideSlider, photos, index }) => {
   };
 
   return (
-    <div className="w-full h-full bg-black bg-opacity-70 font-bold z-10 fixed">
+    <div className="w-full h-full bg-black bg-opacity-70 font-bold z-10 fixed inset-0">
       <button
-        className="fixed top-4 right-4 text-white font-bold"
+        className="fixed top-4 right-4 text-white font-bold hover:text-secondary transition-colors ease-in-out"
         onClick={hideSlider}
       >
         <FaXmark className="w-8 h-8" />
       </button>
       <FaAngleLeft
         onClick={handlePrevPhoto}
-        className="fixed top-1/2 translate-y-[-50%] left-4 text-white w-8 h-8"
+        className="fixed hover:scale-125 transition-transform ease-in-out cursor-pointer top-1/2 translate-y-[-50%] left-4 text-white w-8 h-8"
       />
       <div className="absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] w-fit min-w-[70%] h-96 flex justify-center items-center object-cover z-50">
-        <img src={photos[activeIndex]} alt={photos[activeIndex]}/>
+        <img src={photos[activeIndex]} alt={photos[activeIndex]} className="select-none"/>
       </div>
       <FaAngleRight
-        className="fixed top-1/2 translate-y-[-50%] right-4 text-white w-8 h-8"
+        className="fixed hover:scale-125 transition-transform ease-in-out cursor-pointer top-1/2 translate-y-[-50%] right-4 text-white w-8 h-8"
         onClick={handleNextPhoto}
       />
     </div>
