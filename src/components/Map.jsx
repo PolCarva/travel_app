@@ -21,6 +21,8 @@ const Map = ({
   const userCoordinates = { lat: latitude, lng: longitude };
   const mapRef = useRef(null);
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const setLocation = useLocationStore((state) => state.setLocation);
+  const [activeMarker, setActiveMarker] = useState(null);
 
   useEffect(() => {
     setCenter({ lat: latitude, lng: longitude });
@@ -36,6 +38,8 @@ const Map = ({
       lat: place.location.latitude,
       lng: place.location.longitude,
     };
+
+    setActiveMarker(place);
 
     getDistance(userCoordinates, location).then((time) => {
       setSelectedPlace({ ...place, walkingTime: time });
@@ -89,8 +93,12 @@ const Map = ({
   };
 
   const handleCenterUser = () => {
-    setCenter({ lat: latitude, lng: longitude });
-    mapRef.current.setZoom(17);
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords;
+      setLocation(latitude, longitude);
+      setCenter({ lat: latitude, lng: longitude });
+    });
+    mapRef.current.setZoom(16);
   };
 
   return (
@@ -102,6 +110,10 @@ const Map = ({
         zoom={15}
         options={mapOptions}
         onLoad={(mapInstance) => (mapRef.current = mapInstance)}
+        onClick={() => {
+          setSelectedPlace(null);
+          setActiveMarker(null);
+        }}
       >
         <div
           onClick={handleCenterUser}
@@ -130,8 +142,24 @@ const Map = ({
               lng: place.location.longitude,
             }}
             onClick={() => handleMarkerClick(place)}
+            options={{
+              visible: activeMarker ? activeMarker?.id !== place.id : true,
+            }}
           />
         ))}
+        {activeMarker && (
+          <MarkerF
+            icon={{
+              url: `/img/${category}-location-active.png`,
+              scaledSize: { width: 75, height: 75 },
+            }}
+            key={activeMarker}
+            position={{
+              lat: activeMarker.location.latitude,
+              lng: activeMarker.location.longitude,
+            }}
+          />
+        )}
         {selectedPlace && <SelectedPlace place={selectedPlace} />}
       </GoogleMap>
     </div>

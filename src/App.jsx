@@ -2,11 +2,12 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import DetailPage from "./pages/DetailPage";
 import ErrorPage from "./pages/ErrorPage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useLocationStore from "./store/useLocationStore";
 
 function App() {
   const setLocation = useLocationStore((state) => state.setLocation);
+  const [nearbyPlaces, setNearbyPlaces] = useState([]);
 
   useEffect(() => {
     const getUserLocation = () => {
@@ -17,14 +18,20 @@ function App() {
     };
 
     getUserLocation();
-  }, [setLocation]);
+  }, []);
 
   return (
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/detail/:id" element={<DetailPage />} />
+          <Route
+            path="/"
+            element={<MainPage setNearbyPlaces={setNearbyPlaces} />}
+          />
+          <Route
+            path="/detail/:id"
+            element={<DetailPage nearbyPlaces={nearbyPlaces} />}
+          />
           <Route path="*" element={<ErrorPage />} />
         </Routes>
       </Router>

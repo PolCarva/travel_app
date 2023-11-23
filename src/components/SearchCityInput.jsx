@@ -5,7 +5,6 @@ import { Autocomplete } from "@react-google-maps/api";
 import { FaXmark } from "react-icons/fa6";
 
 const SearchCityInput = ({ onPlaceSelected }) => {
-
   //Espera un segundo a que ~algo~ cargue y luego muestra el autocomplete
   const [timeoutFlag, setTimeoutFlag] = useState(false);
   useEffect(() => {
@@ -31,7 +30,6 @@ const SearchCityInput = ({ onPlaceSelected }) => {
   };
 
   const handleClear = () => {
-    console.log("clear");
     inpRef.current.value = "";
   };
 
@@ -49,12 +47,14 @@ const SearchCityInput = ({ onPlaceSelected }) => {
               aria-label="Search City"
             />
           </Autocomplete>
-        ):  <input
-        type="text"
-        className="flex-1 py-2 bg-white outline-none w-full"
-        placeholder="Search City"
-        aria-label="Search City"
-      />}
+        ) : (
+          <input
+            type="text"
+            className="flex-1 py-2 bg-white outline-none w-full"
+            placeholder="Search City"
+            aria-label="Search City"
+          />
+        )}
       </div>
       <FaXmark
         className="hover:text-red-500 cursor-pointer transition-colors ease-in-out"

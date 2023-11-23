@@ -13,7 +13,7 @@ const ListCard = ({ place }) => {
 
   const photoName = (place.photos && place.photos[0].name) || "/img/sample.jpg";
   const url =
-    `https://places.googleapis.com/v1/${photoName}/media?key=${apiKey}&maxWidthPx=400` ||
+  `https://places.googleapis.com/v1/${photoName}/media?key=${apiKey}&maxWidthPx=400` ||
     "/img/sample.jpg";
   //const url = "/img/sample.jpg";
 

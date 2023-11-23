@@ -13,7 +13,8 @@ import Footer from "../components/Footer";
 import List from "../components/List";
 import FilterContainer from "../components/FilterContainer";
 
-const MainPage = () => {
+const MainPage = ({ setNearbyPlaces }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [tab, setTab] = useState("map");
   const [data, setData] = useState([]);
   const [listedPlaces, setListedPlaces] = useState([]);
@@ -22,6 +23,7 @@ const MainPage = () => {
   const { latitude, longitude } = useLocationStore((state) => state);
   const { liked } = useLikedStore((state) => state);
   const [center, setCenter] = useState({ latitude, longitude });
+  const setLocation = useLocationStore((state) => state.setLocation);
 
   const [filter, setFilter] = useState({
     type: "restaurants",
@@ -30,6 +32,7 @@ const MainPage = () => {
   });
 
   useEffect(() => {
+    setIsLoading(true);
     const params = {
       lat: center.lat,
       lng: center.lng,
@@ -37,10 +40,18 @@ const MainPage = () => {
       type: filter.type,
     };
     (latitude || longitude) && //Espera a que los valores de latitud y longitud estén disponibles
-      getPlacesData(params).then((response) => {
-        setData(response);
-        setListedPlaces(response);
-      });
+      getPlacesData(params)
+        .then((response) => {
+          setData(response);
+          setListedPlaces(response);
+          setNearbyPlaces(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
 
     handleFilter();
   }, [center, filter.type]);
@@ -65,6 +76,7 @@ const MainPage = () => {
     const lng = geometry.location.lng();
 
     setCenter({ lat, lng });
+    setLocation(lat, lng);
 
     const params = {
       lat: lat,
@@ -121,6 +133,7 @@ const MainPage = () => {
       <div className="h-full flex relative overflow-hidden">
         <List
           places={listedPlaces}
+          isLoading={isLoading}
           className={`${
             tab === "list" ? "w-full pt-2" : "w-0 pt-0 px-0 overflow-hidden"
           } lg:w-1/3 lg:px-10 h-full p-10 !overflow-y-scroll flex flex-col gap-2 items-center transition-all duration-300 ease-in-out`}
