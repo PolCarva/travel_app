@@ -28,6 +28,11 @@ const Map = ({
     setCenter({ lat: latitude, lng: longitude });
   }, [latitude, longitude]);
 
+  useEffect(() => {
+    setActiveMarker(null);
+    setSelectedPlace(null);
+  }, [category]);
+
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries: useMemo(() => libraries, []),
