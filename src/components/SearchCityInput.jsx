@@ -24,8 +24,6 @@ const SearchCityInput = ({ onPlaceSelected }) => {
     if (autocomplete !== null) {
       const place = autocomplete.getPlace();
       onPlaceSelected(place);
-    } else {
-      console.log("Autocomplete is not loaded yet!");
     }
   };
 

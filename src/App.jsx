@@ -4,6 +4,7 @@ import DetailPage from "./pages/DetailPage";
 import ErrorPage from "./pages/ErrorPage";
 import { useEffect, useState } from "react";
 import useLocationStore from "./store/useLocationStore";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const setLocation = useLocationStore((state) => state.setLocation);
@@ -22,6 +23,7 @@ function App() {
 
   return (
     <>
+      <Toaster />
       <Router>
         <Routes>
           <Route

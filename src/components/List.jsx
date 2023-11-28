@@ -13,7 +13,12 @@ const List = ({ places, className, isLoading }) => {
           <span className="font-medium text-2xl">Oops!</span> No places here :(
         </p>
       )}
-      {!isLoading && places?.map((place) => (
+      {places?.length > 0 && !isLoading && (
+        <p className="text-xl text-gray-50 text-center flex flex-col gap-2">
+          Places ({places?.length})
+        </p>
+      )}
+      {places?.map((place) => (
         <ListCard key={place.id} place={place} />
       ))}
     </div>
