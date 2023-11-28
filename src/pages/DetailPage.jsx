@@ -162,7 +162,7 @@ const DetailPage = ({ nearbyPlaces }) => {
         </div>
         <img
           src={place.photoUrls?.[0] || "/img/sample.jpg"}
-          alt={place.displayName.text}
+          alt={place.displayName?.text}
           className="absolute top-0 right-1/2 translate-x-[50%] w-full h-2/5 object-cover z-0 bg-gray-50"
           onError={(e) => {
             e.target.onerror = null;
@@ -289,15 +289,15 @@ const DetailPage = ({ nearbyPlaces }) => {
                   .map((place) => (
                     // Aquí renderiza cada lugar como desees
                     <Link
-                      to={`/detail/${place.id}`}
-                      key={place.id}
+                      to={`/detail/${place?.id}`}
+                      key={place?.id}
                       className="flex-1 rounded-md border-primary border bg-opacity-60 hover:scale-105 hover:bg-primary hover:bg-opacity-10 transition-all ease-in-out p-4 "
                     >
                       <div className="flex gap-5 justify-between">
                         <img
                           className="h-24 aspect-square rounded-md object-cover"
                           src={
-                            `https://places.googleapis.com/v1/${place.photos[0].name}/media?key=${apiKey}&maxWidthPx=400` ||
+                            `https://places.googleapis.com/v1/${place.photos?.[0].name}/media?key=${apiKey}&maxWidthPx=400` ||
                             "/img/sample.jpg"
                           }
                           onError={(e) => {
@@ -308,7 +308,7 @@ const DetailPage = ({ nearbyPlaces }) => {
                         />
                         <div className="flex-1">
                           <h3 className="font-bold text-xl">
-                            {place.displayName.text || "No Name"}
+                            {place.displayName?.text || "No Name"}
                           </h3>
                           <p className="text-sm line-clamp-2">
                             {place.formattedAddress || "No adress"}
@@ -328,7 +328,7 @@ const DetailPage = ({ nearbyPlaces }) => {
         {isSliderVisible && (
           <ModalPhotoSlider
             hideSlider={hideSlider}
-            photos={place.photoUrls}
+            photos={place.photoUrls || []}
             index={activeImage}
           />
         )}
